@@ -1,5 +1,6 @@
 package com.example.firebaseautenticao;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,15 +24,28 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
         String resultado = sharedPreferences.getString("LOGIN", "");
 
         if(!Boolean.parseBoolean(resultado)) {
             criarLogin();
         }
+
+
         //mAuth = FirebaseAuth.getInstance();
+    }
+
+    private void sairSistema()
+    {
+        sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("LOGIN", "false");
+        editor.apply();
+        finish();
     }
 
     private void criarLogin()
@@ -65,6 +81,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    // Menu
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_principal, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+
+        if(id == R.id.btn_sair){
+            sairSistema();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
