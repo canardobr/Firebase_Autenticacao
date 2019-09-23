@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Firebase Autenticação</string>
+    <string name="saudacao">Bem vindo a tela Principal</string>
+    <string name="btn_sair">Sair</string>
+</resources>
